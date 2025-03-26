@@ -7,6 +7,10 @@ public class Challenge4 {
      palindrome number otherwise it should return false. A palindrome number is a
      number which, when reversed, is equal to the original number. For example: 121,
      12321, 1001 etc.
+     Examples:
+     isPalindrome(707) → should return true
+     isPalindrome(1221) → should return true
+     isPalindrome(11212) → should return false
     */
 
     public static void run(int number) {
