@@ -13,14 +13,14 @@ public class Film {
      You need to save this data into a text file, which the program will read.
     */
 
-    private String title;
-    private String director;
-    private String producer;
-    private String releaseDate;
-    private int runningTime;
-    private String description;
+    private final String title;
+    private final String director;
+    private final String producer;
+    private final String releaseDate;
+    private final String runningTime;
+    private final String description;
 
-    public Film(String title, String director, String producer, String releaseDate, int runningTime, String description) {
+    public Film(String title, String director, String producer, String releaseDate, String runningTime, String description) {
         this.title = title;
         this.director = director;
         this.producer = producer;
@@ -45,7 +45,7 @@ public class Film {
         return releaseDate;
     }
 
-    public int getRunningTime() {
+    public String getRunningTime() {
         return runningTime;
     }
 

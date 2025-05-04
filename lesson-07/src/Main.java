@@ -63,22 +63,103 @@ public class Main {
         System.out.println(customer3.getName() + " - " + customer3.getCreditLimit() + " - " + customer3.getEmailAddress());
 
         // Challenge 4
-        System.out.println("\nChallenge 4:");
-        File file = new File("./src/data.json");
-        Scanner scanner = null;
+        challenge4();
+
+    }
+
+    public static void challenge4() {
+        File file = new File("./src/data/films.json");
+
+        Scanner scanner;
 
         try {
             scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                System.out.println(scanner.nextLine());
-            }
         } catch (FileNotFoundException e) {
-            System.out.println("Error reading the file: " + e.getMessage());
-        } finally {
-            if (scanner != null) {
-                scanner.close();
-            }
+            System.out.println("Error: File not found.");
+            return;
         }
 
+        Film film1 = getFilmData(scanner);
+        Film film2 = getFilmData(scanner);
+        Film film3 = getFilmData(scanner);
+        Film film4 = getFilmData(scanner);
+        Film film5 = getFilmData(scanner);
+
+        scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println();
+            System.out.println("====== Studio Ghibli films ======");
+            System.out.println();
+            System.out.println("1. " + film1.getTitle());
+            System.out.println("2. " + film2.getTitle());
+            System.out.println("3. " + film3.getTitle());
+            System.out.println("4. " + film4.getTitle());
+            System.out.println("5. " + film5.getTitle());
+            System.out.println("6. Exit the application");
+            System.out.println();
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            if (choice == 6) break;
+
+            switch (choice) {
+                case 1 -> printFilmDetails(film1);
+                case 2 -> printFilmDetails(film2);
+                case 3 -> printFilmDetails(film3);
+                case 4 -> printFilmDetails(film4);
+                case 5 -> printFilmDetails(film5);
+                default -> System.out.println("Invalid choice.");
+            }
+
+            while (true) {
+                scanner = new Scanner(System.in);
+                System.out.println("Press Q to return to the main menu.");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("Q")) break;
+                System.out.println("Invalid input. Please press Q to go back.");
+            }
+
+        }
+
+        scanner.close();
     }
+
+    public static String getFieldValue(Scanner scanner, String field) {
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.contains('"' + field + '"')) {
+                int colonIndex = line.indexOf(':');
+                if (colonIndex != -1) {
+                    String value = line.substring(colonIndex + 1).trim();
+                    return value.replace("\"", "").replace(",", "");
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Film getFilmData(Scanner scanner) {
+        String title = getFieldValue(scanner,"title");
+        String description = getFieldValue(scanner,"description");
+        String director = getFieldValue(scanner,"director");
+        String producer = getFieldValue(scanner,"producer");
+        String releaseDate = getFieldValue(scanner,"release_date");
+        String runningTime = getFieldValue(scanner,"running_time");
+        return new Film(title, director, producer, releaseDate, runningTime, description);
+    }
+
+    public static void printFilmDetails(Film film) {
+        System.out.println();
+        System.out.println("======= FILM DETAILS =======");
+        System.out.println("Title        : " + film.getTitle());
+        System.out.println("Director     : " + film.getDirector());
+        System.out.println("Producer     : " + film.getProducer());
+        System.out.println("Release Date : " + film.getReleaseDate());
+        System.out.println("Running Time : " + film.getRunningTime());
+        System.out.println();
+        System.out.println("Description  : " + film.getDescription());
+        System.out.println();
+    }
+
 }
