@@ -1,5 +1,3 @@
-package pondmodel;
-
 import java.util.Random;
 
 public class Weed extends Stone {

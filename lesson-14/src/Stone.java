@@ -1,5 +1,3 @@
-package pondmodel;
-
 public class Stone {
     protected int x;
     protected int y;
