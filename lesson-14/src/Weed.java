@@ -15,7 +15,7 @@ public class Weed extends Stone {
     }
 
     public void randomLifecycle(Object[][] pond) {
-        if (Math.random() < 0.7) {
+        if (Math.random() < 0.9) {
             growToAdjacent(pond);
         } else {
             pond[y][x] = null;

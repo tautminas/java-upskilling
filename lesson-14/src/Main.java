@@ -48,7 +48,7 @@ public class Main {
                 }
             }
             for (Fish fish : fishes) {
-                fish.move(pond);
+                fish.liveCycle(pond);
             }
 
             System.out.println("Day " + day);
