@@ -1,6 +1,5 @@
 package pondmodel;
 
-import java.util.List;
 import java.util.Random;
 
 public class Fish extends Weed {
@@ -9,36 +8,27 @@ public class Fish extends Weed {
         super(x, y);
     }
 
-    public void move(List<Stone> stones, int pondWidth, int pondHeight) {
-        Random rand = new Random();
-        int newX = x;
-        int newY = y;
+    @Override
+    public void randomLifecycle(Object[][] pond) {}
+
+    public void move(Object[][] pond) {
+        int width = pond[0].length;
+        int height = pond.length;
 
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
 
-        for (int i = 0; i < 4; i++) {
-            int dir = rand.nextInt(4);
-            int tx = x + dx[dir];
-            int ty = y + dy[dir];
+        Random rand = new Random();
+        int dir = rand.nextInt(4);
 
-            if (tx >= 0 && tx < pondWidth && ty >= 0 && ty < pondHeight && !isOccupied(tx, ty, stones)) {
-                newX = tx;
-                newY = ty;
-                break;
-            }
+        int nx = x + dx[dir];
+        int ny = y + dy[dir];
+
+        if (nx >= 0 && nx < width && ny >= 0 && ny < height && pond[ny][nx] == null) {
+            pond[ny][nx] = this;
+            pond[y][x] = null;
+            x = nx;
+            y = ny;
         }
-
-        this.x = newX;
-        this.y = newY;
-    }
-
-    private boolean isOccupied(int x, int y, List<Stone> stones) {
-        for (Stone stone : stones) {
-            if (stone.getX() == x && stone.getY() == y) {
-                return true;
-            }
-        }
-        return false;
     }
 }

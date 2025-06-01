@@ -1,6 +1,5 @@
 package pondmodel;
 
-import java.util.List;
 import java.util.Random;
 
 public class Weed extends Stone {
@@ -15,48 +14,29 @@ public class Weed extends Stone {
         return alive;
     }
 
-    public void grow() {
-        alive = true;
-    }
-
-    public void die() {
-        alive = false;
-    }
-
-    public void randomLifecycle(List<Stone> stones, int width, int height) {
-        Random rand = new Random();
-        if (rand.nextBoolean()) {
-            if (alive) {
-                growToAdjacent(stones, width, height);
-            }
+    public void randomLifecycle(Object[][] pond) {
+        if (Math.random() < 0.7) {
+            growToAdjacent(pond);
         } else {
-            die();
+            pond[y][x] = null;
         }
     }
 
-    private void growToAdjacent(List<Stone> stones, int width, int height) {
-        Random rand = new Random();
+    private void growToAdjacent(Object[][] pond) {
+        int width = pond[0].length;
+        int height = pond.length;
+
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
 
-        for (int i = 0; i < 4; i++) {
-            int dir = rand.nextInt(4);
-            int tx = x + dx[dir];
-            int ty = y + dy[dir];
+        Random rand = new Random();
+        int dir = rand.nextInt(4);
 
-            if (tx >= 0 && tx < width && ty >= 0 && ty < height && !isOccupied(tx, ty, stones)) {
-                stones.add(new Weed(tx, ty));
-                break;
-            }
-        }
-    }
+        int nx = x + dx[dir];
+        int ny = y + dy[dir];
 
-    private boolean isOccupied(int x, int y, List<Stone> stones) {
-        for (Stone stone : stones) {
-            if (stone.getX() == x && stone.getY() == y) {
-                return true;
-            }
+        if (nx >= 0 && nx < width && ny >= 0 && ny < height && pond[ny][nx] == null) {
+            pond[ny][nx] = new Weed(nx, ny);
         }
-        return false;
     }
 }
