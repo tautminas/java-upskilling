@@ -1,0 +1,3 @@
+public enum Category {
+    PRODUCE, DAIRY, MEAT, BAKERY, BEVERAGES, HOUSEHOLD
+}
